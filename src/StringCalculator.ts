@@ -1,15 +1,36 @@
 export class StringCalculator {
     add(numbers: string): number {
-        if ( !numbers ) return 0;
+        // If the input is an empty string, return 0
+        if (!numbers) {
+            return 0;
+        }
 
-        // Split the string by comma, and map the strings to numbers
-        const numList = numbers
-            .split(',')
-            .map(num => num.trim())   // Trim any whitespace around the numbers
-            .filter(num => num)       // Filter out any empty strings from trailing commas
-            .map(num => parseInt(num, 10)); // Convert to integers
+        let sum = 0;               // Variable to accumulate the sum of numbers
+        let currentNumber = '';    // String to accumulate characters for the current number
 
-        // Sum the numbers and return the result
-        return numList.reduce((sum, num) => sum + num, 0);
+        // Loop through each character in the input string
+        for (let i = 0; i < numbers.length; i++) {
+            const char = numbers[i];
+
+            // If the current character is a comma, process the current number
+            if (char === ',') {
+                if (currentNumber) {
+                    // Convert the accumulated string to an integer, trim whitespace, and add to the sum
+                    sum += parseInt(currentNumber.trim(), 10);
+                    currentNumber = '';  // Reset currentNumber for the next number
+                }
+            } else {
+                // Accumulate characters to form the current number
+                currentNumber += char;
+            }
+        }
+
+        // After the loop, handle the last number (if there's any left)
+        if (currentNumber) {
+            sum += parseInt(currentNumber.trim(), 10);
+        }
+
+        // Return the final sum of all numbers
+        return sum;
     }
 }
