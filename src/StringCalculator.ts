@@ -12,8 +12,8 @@ export class StringCalculator {
         for (let i = 0; i < numbers.length; i++) {
             const char = numbers[i];
 
-            // If the current character is a comma, process the current number
-            if (char === ',') {
+            // If the current character is a comma or a newline, process the current number
+            if (char === ',' || char === '\n') {
                 if (currentNumber) {
                     // Convert the accumulated string to an integer, trim whitespace, and add to the sum
                     sum += parseInt(currentNumber.trim(), 10);
