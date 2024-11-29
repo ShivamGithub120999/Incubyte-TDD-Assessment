@@ -5,6 +5,15 @@ export class StringCalculator {
             return 0;
         }
 
+        let delimiter = /,|\n/; // Default delimiters: comma and newline
+
+        // Check for custom delimiter
+        if (numbers.startsWith("//")) {
+            const delimiterEndIndex = numbers.indexOf("\n");
+            delimiter = new RegExp(numbers.substring(2, delimiterEndIndex));
+            numbers = numbers.substring(delimiterEndIndex + 1); // Remove delimiter line from the numbers string
+        }
+
         let sum = 0;               // Variable to accumulate the sum of numbers
         let currentNumber = '';    // String to accumulate characters for the current number
 
@@ -12,8 +21,8 @@ export class StringCalculator {
         for (let i = 0; i < numbers.length; i++) {
             const char = numbers[i];
 
-            // If the current character is a comma or a newline, process the current number
-            if (char === ',' || char === '\n') {
+            // Check if the current character matches any of the delimiters
+            if (char.match(delimiter)) {
                 if (currentNumber) {
                     // Convert the accumulated string to an integer, trim whitespace, and add to the sum
                     sum += parseInt(currentNumber.trim(), 10);
